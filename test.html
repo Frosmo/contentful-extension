@@ -1,0 +1,39 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+    var api = {
+        parameters: {
+            instance: {
+                token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ3Y2E4NGYwNTQ2MTcyZjhkNjQ3NGU3ZTNhMzEzZjM3NjRlOTUyNWY2NjU4ODRhMDc3MWRkNGE4MjQwYmYzNTgzY2Q3OGJkNDMzMWE2ZGY2In0.eyJhdWQiOiIxMSIsImp0aSI6ImQ3Y2E4NGYwNTQ2MTcyZjhkNjQ3NGU3ZTNhMzEzZjM3NjRlOTUyNWY2NjU4ODRhMDc3MWRkNGE4MjQwYmYzNTgzY2Q3OGJkNDMzMWE2ZGY2IiwiaWF0IjoxNTM1Njk5NTc2LCJuYmYiOjE1MzU2OTk1NzYsImV4cCI6MTU2NzIzNTU3Niwic3ViIjoiOTM5Iiwic2NvcGVzIjpbXX0.ZhYQ00vBHS7gTzC7qIafjZqXXzSPc_Ra2tMeMQOtbK8VmhuFkbjU45PtT_4qRfPXR43aivatrbJjfNe9IzIGDSJgatp2an0ekhTeWU975A-DYlKLyydszWsKJvwS0RdcGDjnbXDu-IOy0IGFtGeEuLPvfPBLBPAL3FgUNaidUn3Z96fQKtampSHRF3LoeXNtrKwVUJFpiNsHFEaS3blLstnSojbRsppHODPlSfzO7pZS1loea0lDzSbLwDFDN2XqOYb3vnX9pY2bYNrpc6IwlpDhiTh8AG67Ha-y-OKXQoE2oxL8kiPpwEEFA35zH8zyExKmpBKC91dHbRCMuoOzN3AjZRfMSA1DHfV-jFbZfRd7pembMMkFFtzDiWGbI91MXySFrufTJxDqDjJ1grcXHuzjzXouO74T0ZtwrXV8HgBv3NgUPqHStvkOQrGYFOtPfano1fchdeC2ytq3G7m8H21PM4ebOAC-0mCG4kBEhiA-okig_G5EPAH4IBNW5qVS_gx1NCoyUy_SWMsXNetlgY1bF69uegp3fQNH3SAXPK_YvIqvkLEiX0uEnuz-A2joJgMNEKsToFaakt233fwcUd5wpCZaBXdENn4o6blviZknbTaqEQwaQ1phsWsMv22NwKsgyrnPv9m0r2Wpa4gDynk664l3dos03cJ2Bj7hI88',
+                baseUrl: 'https://graniitti_dev.inpref.com',
+                siteId: '1420'
+            }
+        }
+    }
+      $.ajax({
+        type: 'GET',
+        beforeSend: function (request) {
+            console.log('here');
+          // Read-only api token for Frosmo account.
+          request.setRequestHeader('Authorization', 'Bearer ' + api.parameters.instance.token);
+        },
+        url: `${api.parameters.instance.baseUrl}/v0/sites/${api.parameters.instance.siteId}/messages`,
+        success: function (response) {
+
+          // Filter archived audiences.
+          var audiences = response.filter(function (item) {
+            return !item.archived;
+          })
+
+          // Hide loader.
+          document.querySelector('.loading').style.display = 'none';
+          // Show form.
+          document.querySelector('.cf-form-field').style.display = 'block';
+
+          createDropDown(audiences);
+        },
+        error: function (response) {
+          showError(response.status + ' ' + response.statusText + ' - ' + response.responseJSON.message);
+        }
+      });
+</script>

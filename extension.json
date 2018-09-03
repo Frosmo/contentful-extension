@@ -1,0 +1,28 @@
+{
+    "id": "Frosmo-audiences",
+    "name": "Frosmo Audiences",
+    "fieldTypes": ["Object"],
+    "srcdoc": "index.html",
+    "parameters": {
+      "instance": [
+        {
+            "id": "baseUrl",
+            "type": "Symbol",
+            "name": "Frosmo base url",
+            "default": "https://graniitti_dev.inpref.com"
+          },          
+        {
+          "id": "token",
+          "type": "Symbol",
+          "name": "Frosmo read-only token",
+          "default": ""
+        },
+        {
+          "id": "siteId",
+          "type": "Symbol",
+          "name": "Frosmo site ID",
+          "default": ""
+        }
+      ]
+    }
+  }
