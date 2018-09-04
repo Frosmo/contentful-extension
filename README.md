@@ -27,5 +27,5 @@ Force update:
 
 ## Usage in Frosmo
 - Contentful API needs to be queried to match the modification field, eg. (fields.frosmo contains Frosmo modificationId):
-https://cdn.contentful.com/spaces/[SPACE_ID]/entries?content_type=product&fields.frosmo=11018&select=fields&access_token=[ACCESS_TOKEN]
+https://cdn.contentful.com/spaces/[SPACE_ID]/entries?content_type=[CONTENT_TYPE]&fields.frosmo=[MODIFICATION_ID]&select=fields&access_token=[ACCESS_TOKEN]
 - This query can be made eg. in custom renderer
