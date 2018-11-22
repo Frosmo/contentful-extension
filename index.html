@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Optimizely audiences</title>
+  <title>Frosmo segments</title>
 
   <link rel="stylesheet" href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
@@ -12,17 +12,17 @@
     body {
       margin: 0;
       background: none;
-      height: 130px;
+      height: 150px;
     }
 
     select {
       width: 100%;
     }
 
-    .optimizely-logo {
+    .frosmo-logo {
       height: 3em;
       background: url(https://frosmo.com/wp-content/themes/frosmo/images/logo-frosmo-cheetah.svg) no-repeat;
-      background-position: top -1em left -0px;
+      background-position: 1em -1em left -0px;
       background-size: auto 4em;
     }
 
@@ -35,6 +35,9 @@
     .cf-field-error,
     .cf-form-field {
       display: none;
+    }
+    #audiences-select {
+      width: 75%;
     }
   </style>
 
@@ -50,9 +53,9 @@
   <div class="cf-form-field">
     <div class="select-container"></div>
     <div class="cf-form-hint">
-      Please select the modification for this content.
+      Please select the segment for this content.
     </div>
-    <div class="optimizely-logo"></div>
+    <div class="frosmo-logo"></div>
   </div>
 
 
@@ -68,22 +71,17 @@
         type: 'GET',
         beforeSend: function (request) {
           // Read-only api token for Frosmo account.
-          request.setRequestHeader('Authorization', 'Bearer ' + api.parameters.instance.token);
+          request.setRequestHeader('Authorization', 'Bearer ' + api.parameters.installation.token);
         },
-        url: `${api.parameters.instance.baseUrl}/v0/sites/${api.parameters.instance.siteId}/messages`,
+        url: `${api.parameters.installation.baseUrl}/v0/sites/${api.parameters.installation.siteId}/segments`,
         success: function (response) {
-
-          // Filter archived audiences.
-          var audiences = response.filter(function (item) {
-            return !item.archived;
-          })
 
           // Hide loader.
           document.querySelector('.loading').style.display = 'none';
           // Show form.
           document.querySelector('.cf-form-field').style.display = 'block';
 
-          createDropDown(audiences);
+          createDropDown(response);
         },
         error: function (response) {
           showError(response.status + ' ' + response.statusText + ' - ' + response.responseJSON.message);
@@ -100,15 +98,15 @@
       }
 
       function createDropDown(data) {
-
         // Map structure of data so it can seed the dropdown.
         var dropdownData = data.map(function (data) {
-          return { id: data.id, text: data.name };
+          return { id: data.title, text: data.title };
         });
+
+        dropdownData.unshift({ id: "None", text: "None" })
 
         var selectEl = document.createElement('select');
         selectEl.id = 'audiences-select';
-        selectEl.setAttribute('multiple', 'multiple');
         document.querySelector('.select-container').append(selectEl);
         var $select2 = $('#audiences-select').select2({
           placeholder: 'Select audiences',
@@ -116,21 +114,19 @@
         });
 
         $select2.on('change', function () {
-          api.field.setValue(getSelection());
+          api.field.setValue($select2.val());
         });
 
         detachValueChangeHandler = api.field.onValueChanged(function () {
           var value = api.field.getValue();
-          if (value.join(',') !== getSelection().join(',')) {
+          if (value !== $select2.val()) {
             $select2.val(value);
             $select2.trigger('change');
           }
         })
 
         function getSelection() {
-          return $select2.select2('data').map(function (item) {
-            return item.id;
-          });
+          return $select2.select2('data');
         }
       }
       // Event handler for window unload.
