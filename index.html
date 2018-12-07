@@ -53,12 +53,10 @@
   <div class="cf-form-field">
     <div class="select-container"></div>
     <div class="cf-form-hint">
-      Please select the segment for this content.
+      Please select Frosmo segment for this content.
     </div>
     <div class="frosmo-logo"></div>
   </div>
-
-
 
   <script>
     window.contentfulExtension.init(function (api) {
@@ -70,17 +68,15 @@
       $.ajax({
         type: 'GET',
         beforeSend: function (request) {
-          // Read-only api token for Frosmo account.
+          // Api token for Frosmo account.
           request.setRequestHeader('Authorization', 'Bearer ' + api.parameters.installation.token);
         },
         url: `${api.parameters.installation.baseUrl}/v0/sites/${api.parameters.installation.siteId}/segments`,
         success: function (response) {
-
           // Hide loader.
           document.querySelector('.loading').style.display = 'none';
           // Show form.
           document.querySelector('.cf-form-field').style.display = 'block';
-
           createDropDown(response);
         },
         error: function (response) {
@@ -138,7 +134,6 @@
       }
 
     });
-
   </script>
 </body>
 

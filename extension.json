@@ -1,6 +1,6 @@
 {
-    "id": "Frosmo-audiences",
-    "name": "Frosmo Audiences",
+    "id": "frosmo-segments",
+    "name": "Frosmo Segments",
     "fieldTypes": ["Object"],
     "srcdoc": "index.html",
     "parameters": {
@@ -9,7 +9,7 @@
             "id": "baseUrl",
             "type": "Symbol",
             "name": "Frosmo base url",
-            "default": "https://graniitti_dev.inpref.com"
+            "default": ""
           },          
         {
           "id": "token",
