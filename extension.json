@@ -4,17 +4,17 @@
     "fieldTypes": ["Object"],
     "srcdoc": "index.html",
     "parameters": {
-      "instance": [
+      "installation": [
         {
             "id": "baseUrl",
             "type": "Symbol",
-            "name": "Frosmo base url",
+            "name": "Frosmo Graniitti url",
             "default": ""
-          },          
+          },
         {
           "id": "token",
           "type": "Symbol",
-          "name": "Frosmo read-only token",
+          "name": "Frosmo Graniitti token",
           "default": ""
         },
         {
@@ -25,4 +25,4 @@
         }
       ]
     }
-  }
+}
