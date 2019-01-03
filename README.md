@@ -10,7 +10,7 @@ Allows [Contentful](https://www.contentful.com/) users to select which [Frosmo](
 
 
 ## Install instructions
-* Install contentful-cli `npm install -g contentful-cli``
+* Install contentful-cli `npm install -g contentful-cli`
 * Edit extension.json and add (Frosmo Graniitti) url, token & siteId
   * In extension.json change `baseUrl` parameter `default: ''` -> to your Graniitti url
   * In extension.json change `token` parameter `default: ''` -> to your Graniitti token
